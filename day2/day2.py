@@ -51,9 +51,9 @@ def check_single_row(row):
         res = row[i]<row[i+1]
         updown_counts[res] += 1
 
-        print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]), row[i]<row[i+1])
-    print("al3 counts",al3_counts)
-    print("updown",updown_counts)
+        # print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]), row[i]<row[i+1])
+    # print("al3 counts",al3_counts)
+    # print("updown",updown_counts)
     # THIS LINE BELOW IS A PROBLEM?
     if al3_counts[True] == len(row)-1:
         # they have enough trues to need second comparison
