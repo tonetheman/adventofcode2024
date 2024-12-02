@@ -1,4 +1,5 @@
 filename = "sample.txt"
+filename = "input.txt"
 
 data = open(filename,"r").readlines()
 
@@ -58,9 +59,11 @@ def part1():
 
     """
 
+    good_count = 0
+
     for row in tmp_data:
         al3_counts = {}
-        updown_counts = {}
+        updown_counts = {False:0,True:0}
         print(len(row),row)
         for i in range(len(row)-1):
             res = atLeastOneMostThree(row[i],row[i+1])
@@ -69,19 +72,24 @@ def part1():
             else:
                 al3_counts[res] = 1
             res = row[i]<row[i+1]
-            if res in updown_counts:
-                updown_counts[res] += 1
-            else:
-                updown_counts[res] = 1
+            updown_counts[res] += 1
 
             print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]), row[i]<row[i+1])
         print("al3 counts",al3_counts)
         print("updown",updown_counts)
         if al3_counts[True] == len(row)-1:
             # they have enough trues to need second comparison
-            pass
+            if updown_counts[False]==len(row)-1 or updown_counts[True]==len(row)-1:
+                print("SUCCESS")
+                good_count += 1
+            else:
+                print("FAIL up down counts")
+
+
         else:
             print("FAIL for at least one and most 3")
         print()
-        
+    
+    print(good_count)
+
 part1()
