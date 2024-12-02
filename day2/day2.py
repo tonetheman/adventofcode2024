@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 # filename = "sample.txt"
 filename = "input.txt"
 
