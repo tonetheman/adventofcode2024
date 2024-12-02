@@ -39,7 +39,7 @@ def test1():
 
 def check_single_row(row):
     final_res = False
-    al3_counts = {}
+    al3_counts = {True:0,False:0}
     updown_counts = {False:0,True:0}
     # print(len(row),row)
     for i in range(len(row)-1):
@@ -155,6 +155,6 @@ def part2():
     print(good_count)
 
 # part1()
-# part2()
+part2()
 # test_recheck()
-test_recheck_specific()
+# test_recheck_specific()
