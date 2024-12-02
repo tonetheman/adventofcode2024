@@ -1,5 +1,5 @@
-filename = "sample.txt"
-# filename = "input.txt"
+# filename = "sample.txt"
+filename = "input.txt"
 
 data = open(filename,"r").readlines()
 
@@ -51,9 +51,10 @@ def check_single_row(row):
         res = row[i]<row[i+1]
         updown_counts[res] += 1
 
-        # print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]), row[i]<row[i+1])
-    # print("al3 counts",al3_counts)
-    # print("updown",updown_counts)
+        print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]), row[i]<row[i+1])
+    print("al3 counts",al3_counts)
+    print("updown",updown_counts)
+    # THIS LINE BELOW IS A PROBLEM?
     if al3_counts[True] == len(row)-1:
         # they have enough trues to need second comparison
         if updown_counts[False]==len(row)-1 or updown_counts[True]==len(row)-1:
@@ -79,17 +80,6 @@ def part1():
 
     print(good_count)
 
-def recheck(row):
-    """
-    the row as it came failed
-    now remove single items and recheck each of them
-    """
-    orig = []
-    for i in row:
-        orig.append(i)
-    
-    print("ORIG",orig)
-
 
 def make_new_skip_index(row,index):
     tmp = []
@@ -100,15 +90,11 @@ def make_new_skip_index(row,index):
             tmp.append(row[i])
     return tmp
 
-def test_recheck():
-    # will not be good if we remove at least 1
-    row = [1,2,7,8,9]
-    
-    # will be good if we remove at least 1
-    row = [1,3,2,4,5]
-        
-    res = check_single_row(row)
-    print("check single row", res)
+def recheck(row):
+    """
+    the row as it came failed
+    now remove single items and recheck each of them
+    """
     count = 0
     for i in range(len(row)):
         # make a new row skipping the index i
@@ -120,10 +106,36 @@ def test_recheck():
     
     if count>0:
         print("WOULD BE GOOD WITH DAMP")
+        return True
     else:
         print("FAILED DAMP")
+        return False
 
 
+
+def test_recheck():
+    # will not be good if we remove at least 1
+    row = [1,2,7,8,9]
+    res = check_single_row(row)
+    print("check single row", res)
+    if res==False:
+        recheck(row)
+    
+    # will be good if we remove at least 1
+    row = [1,3,2,4,5]
+    res = check_single_row(row)
+    print("check single row", res)
+    if res==False:
+        recheck(row)
+        
+
+def test_recheck_specific():
+    row = [77, 74, 77, 82, 86]
+    res = check_single_row(row)
+    print("res",res)
+    if res==False:
+        new_res = recheck(row)
+        print(new_res)
 
 
 def part2():
@@ -134,10 +146,15 @@ def part2():
             good_count += 1
         else:
             # now we need to remove things and retest!
-            recheck(row)
+            print("row to recheck",row)
+            res = recheck(row)
+            if res:
+                good_count += 1
             print("WOULD REMOVE AND RETEST")
             print()
+    print(good_count)
 
 # part1()
 # part2()
-test_recheck()
+# test_recheck()
+test_recheck_specific()
