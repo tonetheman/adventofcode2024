@@ -1,5 +1,5 @@
 filename = "sample.txt"
-filename = "input.txt"
+# filename = "input.txt"
 
 data = open(filename,"r").readlines()
 
@@ -35,61 +35,53 @@ def test1():
     assert(atLeastOneMostThree(1,5)==False)
     assert(atLeastOneMostThree(7,3)==False)
 
+
+
+def check_single_row(row):
+    final_res = False
+
+    al3_counts = {}
+    updown_counts = {False:0,True:0}
+    print(len(row),row)
+    for i in range(len(row)-1):
+        res = atLeastOneMostThree(row[i],row[i+1])
+        if res in al3_counts:
+            al3_counts[res] += 1
+        else:
+            al3_counts[res] = 1
+        res = row[i]<row[i+1]
+        updown_counts[res] += 1
+
+        print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]), row[i]<row[i+1])
+    print("al3 counts",al3_counts)
+    print("updown",updown_counts)
+    if al3_counts[True] == len(row)-1:
+        # they have enough trues to need second comparison
+        if updown_counts[False]==len(row)-1 or updown_counts[True]==len(row)-1:
+            print("SUCCESS")
+            final_res = True
+        else:
+            print("FAIL up down counts")
+            final_res = False
+    else:
+        print("FAIL for at least one and most 3")
+        final_res = False
+    print()
+    return final_res
+
 def part1():
-    # TODO
-    # partial working
-    # sample case #4 does not work
-    """
-    they are good on the first rule of atLeastOneMostThree
-    TODO: But it fails because some are increasing some are decreasing
-    need to check for that also
-[1, 3, 2, 4, 5]
-1 3 True
-3 2 True
-2 4 True
-4 5 True
-
-    other notes 
-        if the first boolean is all True you must check 2nd column
-            if 2nd boolean all False or all True
-                SUCCESS
-            else
-                FAIL
-        if the first boolean is mixed you FAIL
-
-    """
 
     good_count = 0
 
     for row in tmp_data:
-        al3_counts = {}
-        updown_counts = {False:0,True:0}
-        print(len(row),row)
-        for i in range(len(row)-1):
-            res = atLeastOneMostThree(row[i],row[i+1])
-            if res in al3_counts:
-                al3_counts[res] += 1
-            else:
-                al3_counts[res] = 1
-            res = row[i]<row[i+1]
-            updown_counts[res] += 1
 
-            print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]), row[i]<row[i+1])
-        print("al3 counts",al3_counts)
-        print("updown",updown_counts)
-        if al3_counts[True] == len(row)-1:
-            # they have enough trues to need second comparison
-            if updown_counts[False]==len(row)-1 or updown_counts[True]==len(row)-1:
-                print("SUCCESS")
-                good_count += 1
-            else:
-                print("FAIL up down counts")
+        res = check_single_row(row)
+        if res:
+            good_count += 1
 
-
-        else:
-            print("FAIL for at least one and most 3")
-        print()
-    
     print(good_count)
+
+def part2():
+    pass
 
 part1()
