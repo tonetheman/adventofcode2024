@@ -47,12 +47,41 @@ def part1():
 3 2 True
 2 4 True
 4 5 True
+
+    other notes 
+        if the first boolean is all True you must check 2nd column
+            if 2nd boolean all False or all True
+                SUCCESS
+            else
+                FAIL
+        if the first boolean is mixed you FAIL
+
     """
+
     for row in tmp_data:
-        print(row)
+        al3_counts = {}
+        updown_counts = {}
+        print(len(row),row)
         for i in range(len(row)-1):
-            print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]))
+            res = atLeastOneMostThree(row[i],row[i+1])
+            if res in al3_counts:
+                al3_counts[res] += 1
+            else:
+                al3_counts[res] = 1
+            res = row[i]<row[i+1]
+            if res in updown_counts:
+                updown_counts[res] += 1
+            else:
+                updown_counts[res] = 1
+
+            print(row[i],row[i+1],atLeastOneMostThree(row[i],row[i+1]), row[i]<row[i+1])
+        print("al3 counts",al3_counts)
+        print("updown",updown_counts)
+        if al3_counts[True] == len(row)-1:
+            # they have enough trues to need second comparison
+            pass
+        else:
+            print("FAIL for at least one and most 3")
         print()
-
-
+        
 part1()
