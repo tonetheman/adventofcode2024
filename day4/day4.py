@@ -55,21 +55,54 @@ def xmas_search(data,r,c):
 
     return count
         
+def xmas_search2(data,r,c):
+    count = 0
+    if data[r][c]!='A':
+        return 0
+    
+    """
+    print("r,c",r,c)
+    print("value of r,c", data[r][c])
+    print("MAS",data[r-1][c-1]=='M' and data[r][c]=='A' and data[r+1][c+1]=='S')
+    print("row",data[r])
+    print("SAM",data[r-1][c-1]=='S' and data[r][c]=='A' and data[r+1][c+1]=='M')
+    print("part2")
+    print("MAS",data[r-1][c+1]=='M' and data[r][c]=='A' and data[r+1][c-1]=='S')
+    print("SAM",data[r-1][c+1]=='S' and data[r][c]=='A' and data[r+1][c-1]=='M')
+    print()
+    """
+    
+    """
+    easier to search both ways at the same time on each diag
+    """
+    if (data[r-1][c-1]=='M' and data[r][c]=='A' and data[r+1][c+1]=='S') or (data[r-1][c-1]=='S' and data[r][c]=='A' and data[r+1][c+1]=='M'):
+        if (data[r-1][c+1]=='M' and data[r][c]=='A' and data[r+1][c-1]=='S') or (data[r-1][c+1]=='S' and data[r][c]=='A' and data[r+1][c-1]=='M'):
+            count += 1
+    return count        
 
 def find_xmas(data):
     # pp(data)
     total_found = 0
     for ridx in range(len(data)):
         crow = data[ridx]
-        print(crow)
+        # print(crow)
         for cidx in range(len(crow)):
             cc = crow[cidx]
-            if cc=='X':
-                print(ridx,cidx,cc)
-                res = xmas_search(data,ridx,cidx)
+            if cc=='A':
+                # print(ridx,cidx,cc)
+                # part1
+                # res = xmas_search(data,ridx,cidx)
+                # part2
+                res = xmas_search2(data,ridx,cidx)
                 total_found += res
     print("total_found",total_found)
 
 data = get_data()
 new_data = add_padding(data)
 find_xmas(new_data)
+
+def test():
+    # res = xmas_search2(new_data,2,3)
+    # print(res)
+    res = xmas_search2(new_data,4,5)
+    print(res)
